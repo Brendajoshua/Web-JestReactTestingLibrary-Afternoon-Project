@@ -78,12 +78,18 @@ describe('Counter component', () => {
     const incButton = tools.queryByTestId('incButton');
     for(let i = 0; i < countLimit; i++) {
       rtl.fireEvent.click(incButton);
-      
+
     }
     expect(tools.queryByText(new RegExp(maxWarning, 'ig'))).toBeInTheDocument();
   });
 
   it('shows a warning once we hit the lower limit of the counter', () => {
-    // implement
+    const minWarning = "That's as low as";
+    const decButton = tools.queryByTestId('decButton');
+    for(let i = 0; i < countLimit; i--) {
+      rtl.fireEvent.click(decButton);
+      
+    }
+    expect(tools.queryByText(new RegExp(minWarning, 'ig'))).toBeInTheDocument();
   });
 });
