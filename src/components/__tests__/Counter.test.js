@@ -58,7 +58,11 @@ describe('Counter component', () => {
   });
 
   it('prevents the count from going over an upper limit', () => {
-    // implement
+    const incButton = tools.queryByTestId('incButton');
+    for(let i = 0; i <= 5; i++) {
+      rtl.fireEvent.click(incButton);
+    }
+    expect(tools.queryByText(/6/)).not.toBeInTheDocument();
   });
 
   it('prevents the count from going under a lower limit', () => {
