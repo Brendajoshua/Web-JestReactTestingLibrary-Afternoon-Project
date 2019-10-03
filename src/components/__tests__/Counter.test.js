@@ -8,7 +8,7 @@ const countLimit = 5;
 
 beforeEach(() => {
   rtl.cleanup();
-  tools = rtl.render(<Counter user='Peter' />);
+  tools = rtl.render(<Counter user='Peter' countLimit = {countLimit} />);
 });
 
 describe('Counter component', () => {
@@ -59,7 +59,7 @@ describe('Counter component', () => {
 
   it('prevents the count from going over an upper limit', () => {
     const incButton = tools.queryByTestId('incButton');
-    for(let i = 0; i <= 5; i++) {
+    for(let i = 0; i <= 4; i++) {
       rtl.fireEvent.click(incButton);
     }
     expect(tools.queryByText(/6/)).not.toBeInTheDocument();
@@ -67,14 +67,20 @@ describe('Counter component', () => {
 
   it('prevents the count from going under a lower limit', () => {
     const decButton = tools.queryByTestId('decButton');
-    for(let i = 0; i <= 5; i++) {
+    for(let i = 0; i <= 4; i++) {
       rtl.fireEvent.click(decButton);
     }
     expect(tools.queryByText(/-6/)).not.toBeInTheDocument();
   });
 
   it('shows a warning once we hit the upper limit of the counter', () => {
-    // implement
+    const maxWarning = "That's as high as";
+    const incButton = tools.queryByTestId('incButton');
+    for(let i = 0; i < countLimit; i++) {
+      rtl.fireEvent.click(incButton);
+      
+    }
+    expect(tools.queryByText(new RegExp(maxWarning, 'ig'))).toBeInTheDocument();
   });
 
   it('shows a warning once we hit the lower limit of the counter', () => {
