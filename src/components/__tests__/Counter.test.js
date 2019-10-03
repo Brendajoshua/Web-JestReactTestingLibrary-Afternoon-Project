@@ -4,6 +4,7 @@ import * as rtl from '@testing-library/react';
 import Counter from '../Counter';
 
 let tools;
+const countLimit = 5;
 
 beforeEach(() => {
   rtl.cleanup();
@@ -38,11 +39,14 @@ describe('Counter component', () => {
   });
 
   it('can decrement the count by one by clicking decrement', () => {
-    // implement
+    const decButton = tools.queryByTestId('decButton');
+    rtl.fireEvent.click(decButton);
+    expect(tools.queryByText(/0/)).not.toBeInTheDocument();
+    expect(tools.queryByText(/-1/)).toBeInTheDocument();
   });
 
   it('can reset the count clicking rest', () => {
-    // implement
+   
   });
 
   it('prevents the count from going over an upper limit', () => {
